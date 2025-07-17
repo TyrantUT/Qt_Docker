@@ -65,6 +65,16 @@ docker ps -a
 
 # Commit the container (replace {CONTAINER_ID} with the actual ID)
 docker commit {CONTAINER_ID} qt-crosscompile-host:post-compile-6.9.1
+
+# For pre built image
+git clone git@github.com:TyrantUT/BrewberryPi_Qt6.git
+docker run -it --rm --mount type=bind,source="$(pwd)/BrewberryPi_Qt6,target=/build/BrewberryPi_Qt6" tyrantut/qt-crosscompile:post-compile-6.9.1-clean /bin/bash
+mkdir built && cd build
+../qt-raspi/bin/qt-cmake ../BrewberryPi_Qt6
+cmake --build . --parallel
+cmake --install .
+cp BrewberryPiApp ../BrewberryPi_Qt6/
+exit
 ```
 ## Output
 
