@@ -1,0 +1,30 @@
+FROM qt-crosscompile-host:pre-compile-6.9.1 as sysroot
+FROM qt-crosscompile-host:post-compile-6.9.1 as build
+FROM debian:bookworm
+
+LABEL maintain="christopher.radoumis@gmail.com"
+LABEL description="Qt 6 cross-compiler Docker image for Raspberry Pi (arm64)"
+
+ENV DEBIAN_FRONTEND='noninteractive'
+
+RUN sed -i '/^Types:/ s/\<deb\>\(.*\)\(\<deb-src\>\)\?/\0 deb-src/' /etc/apt/sources.list.d/debian.sources \
+        && apt-get update
+
+RUN apt install -y \
+        cmake \
+        gcc-aarch64-linux-gnu \
+        g++-aarch64-linux-gnu \
+        libglib2.0-dev \
+        libdouble-conversion-dev \
+        && apt autoremove --purge -y \
+        && apt clean -y \
+        && rm -rf /var/lib/apt/lists/* \
+        && rm -rf /tmp/* /var/tmp/* \
+        && mkdir -p /sysroot /build/qt-host /build/qt-raspi
+
+WORKDIR /build
+
+COPY --from=sysroot /sysroot/ /sysroot/
+COPY --from=build /build/qt-host /build/qt-host
+COPY --from=build /build/qt-raspi /build/qt-raspi
+COPY --from=build /build/toolchain.cmake /build/
