@@ -62,7 +62,9 @@ function configure_qt () {
             -DQT_BUILD_TESTS=OFF \
             -DCMAKE_INSTALL_PREFIX=/build/qt-host \
             -DBUILD_qtdoc=OFF \
-            -DCMAKE_CXX_FLAGS="-O2"
+            -DBUILD_qt5compat=OFF \
+            -DBUILD_qt3d=OFF \
+            -DCMAKE_CXX_FLAGS="-O2 -Wno-dev"
 
         touch "$TAG_FILE"
 

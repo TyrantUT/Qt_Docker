@@ -50,6 +50,8 @@ function build_qtpi () {
         -DFEATURE_xcb_xlib=ON \
         -DBUILD_WITH_PCH=OFF \
         -DBUILD_qtdoc=OFF \
+        -DBUILD_qt5compat=OFF \
+        -DBUILD_qt3d=OFF \
         -DQT_DEBUG_FIND_PACKAGE=ON \
         -DQT_HOST_PATH=/build/qt-host \
         -DCMAKE_STAGING_PREFIX=/build/qt-raspi \
@@ -59,7 +61,7 @@ function build_qtpi () {
         -DQT_QMAKE_TARGET_MKSPEC=devices/linux-rasp-pi4-aarch64 \
         -DCMAKE_SYSROOT=/sysroot \
         -DQT_AVOID_CMAKE_ARCHIVING_API=ON \
-        -DCMAKE_CXX_FLAGS="-O2"
+        -DCMAKE_CXX_FLAGS="-O2 -Wno-dev"
 
 
     /usr/games/cowsay -f tux "Making QT Pi version $QT_BRANCH_MAJOR.$QT_BRANCH_MINOR."
