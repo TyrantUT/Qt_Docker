@@ -1,9 +1,9 @@
-FROM qt-crosscompile-host:pre-compile-6.9.1 as sysroot
-FROM qt-crosscompile-host:post-compile-6.9.1 as build
+FROM qt-crosscompile-host:pre-compile-6.9.1-minimal as sysroot
+FROM qt-crosscompile-host:post-compile-6.9.1-minimal as build
 FROM debian:bookworm
 
 LABEL maintain="christopher.radoumis@gmail.com"
-LABEL description="Qt 6 cross-compiler Docker image for Raspberry Pi (arm64)"
+LABEL description="Qt 6 minimal cross-compiler Docker image for Raspberry Pi (arm64)"
 
 ENV DEBIAN_FRONTEND='noninteractive'
 

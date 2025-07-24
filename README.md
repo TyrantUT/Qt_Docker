@@ -24,7 +24,7 @@ mkdir -p built
 Build the Docker image for the host environment, which sets up the necessary tools and dependencies for compiling Qt.
 
 ```bash
-docker build -f Dockerfile -t qt-crosscompile-host:pre-compile-6.9.1 .
+docker build -f Dockerfile -t qt-crosscompile-host:base-6.9.1-minimal .
 ```
 
 ### 2. Compile Qt 6.9.1 for the Host
@@ -32,7 +32,7 @@ docker build -f Dockerfile -t qt-crosscompile-host:pre-compile-6.9.1 .
 Run the host container to compile Qt 6.9.1. This step prepares the host environment for cross-compilation.
 
 ```bash
-docker run -it qt-crosscompile-host:pre-compile-6.9.1 /usr/local/bin/build_qt6Host.sh
+docker run -it qt-crosscompile-host:base-6.9.1-minimal /usr/local/bin/build_qt6Host.sh
 ```
 
 ### 3. Commit the Host Container to a New Image
@@ -44,7 +44,7 @@ After compilation, commit the container to a new image to preserve the compiled 
 docker ps -a
 
 # Commit the container (replace {CONTAINER_ID} with the actual ID)
-docker commit {CONTAINER_ID} qt-crosscompile-host:host-compile-6.9.1
+docker commit {CONTAINER_ID} qt-crosscompile-host:host-compile-6.9.1-minimal
 ```
 
 ### 4. Cross-Compile Qt 6.9.1 for Raspberry Pi
@@ -53,7 +53,7 @@ Run the Raspberry Pi container to perform the cross-compilation. Mount the `buil
 
 ```bash
 docker run -it --mount type=bind,source="$(pwd)/built",target=/built \
-  qt-crosscompile-host:host-compile-6.9.1 /usr/local/bin/build_qt6Rpi.sh
+  qt-crosscompile-host:host-compile-6.9.1-minimal /usr/local/bin/build_qt6Rpi.sh
 ```
 
 ### 5. Commit Build environment
@@ -64,19 +64,34 @@ After compilation, commit the container to a new image to preserve the environme
 docker ps -a
 
 # Commit the container (replace {CONTAINER_ID} with the actual ID)
-docker commit {CONTAINER_ID} qt-crosscompile-host:post-compile-6.9.1
+docker commit {CONTAINER_ID} qt-crosscompile-host:post-compile-6.9.1-minimal
+```
 
-# For pre built image
+### 6. Create a new clean image to reduce the overall image size
+```bash
+docker build -f Dockerfile.cleaan -t qt-crosscompile:post-compile-6.9.1-minimal-clean
+```
+
+# Pre built images can be found on Docker Hub
+## Clone the Brewberry Pi Qt project repository
+```bash
 git clone git@github.com:TyrantUT/BrewberryPi_Qt6.git
-docker run -it --rm --mount type=bind,source="$(pwd)/BrewberryPi_Qt6,target=/build/BrewberryPi_Qt6" tyrantut/qt-crosscompile:post-compile-6.9.1-clean /bin/bash
-mkdir built && cd built
-../qt-raspi/bin/qt-cmake ../BrewberryPi_Qt6
+git checkout qt_6.9.1-minimal
+git pull
+```
+
+## Run the pre-built image to cross compile for Raspberry Pi
+```bash
+
+docker run -it --rm --mount type=bind,source="$(pwd)/BrewberryPi_Qt6,target=/build/BrewberryPi_Qt6" tyrantut/qt-crosscompile:post-compile-6.9.1-minimal-clean /bin/bash
+qt-raspi/bin/qt-cmake BrewberryPi_Qt6
 cmake --build . --parallel
 cmake --install .
-cp BrewberryPiApp ../BrewberryPi_Qt6/
+cp BrewberryPiApp BrewberryPi_Qt6/
 exit
 ```
+
 ## Output
 
 - The `built/` directory will contain the cross-compiled Qt 6.9.1 tar.gz archive.
-- Use the new qt-crosscompile-host:post-compile-6.9.1 image to compile Qt projects
+- Use the new qt-crosscompile-host:post-compile-6.9.1-minimal image to compile Qt projects
