@@ -100,7 +100,7 @@ function configure_qt () {
             -DBUILD_qt3d=OFF \
             -DBUILD_qtquick3dphysics=OFF \
             -DBUILD_qtgraphs=OFF \
-            -DCMAKE_CXX_FLAGS="-O2"
+            -DCMAKE_CXX_FLAGS="-O2 -Wno-dev"
 
         touch "$TAG_FILE"
 

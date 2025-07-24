@@ -97,7 +97,7 @@ function build_qtpi () {
         -DQT_QMAKE_TARGET_MKSPEC=devices/linux-rasp-pi4-aarch64 \
         -DCMAKE_SYSROOT=/sysroot \
         -DQT_AVOID_CMAKE_ARCHIVING_API=ON \
-        -DCMAKE_CXX_FLAGS="-O2"
+        -DCMAKE_CXX_FLAGS="-O2 -Wno-dev"
 
 
     /usr/games/cowsay -f tux "Making QT Pi version $QT_BRANCH_MAJOR.$QT_BRANCH_MINOR."
