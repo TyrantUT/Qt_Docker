@@ -52,7 +52,6 @@ function build_qtpi () {
         -DBUILD_qtdoc=OFF \
         -DBUILD_qttranslations=OFF \
         -DBUILD_qtwebengine=OFF \
-        -DBUILD_qtwebview=OFF \
         -DBUILD_qtsensors=OFF \
         -DBUILD_qtandroidextras=OFF \
         -DBUILD_qtgamepad=OFF \
