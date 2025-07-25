@@ -68,7 +68,7 @@ docker commit {CONTAINER_ID} qt-crosscompile-host:post-compile-6.9.1-full
 
 ### 6. Create a new clean image to reduce the overall image size
 ```bash
-docker build -f Dockerfile.clean -t qt-crosscompile:post-compile-6.9.1-full-clean
+docker build -f Dockerfile.clean -t qt-crosscompile:post-compile-6.9.1-full-clean .
 ```
 
 # Pre built images can be found on Docker Hub
