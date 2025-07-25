@@ -50,7 +50,6 @@ function build_qtpi () {
         -DBUILD_qttranslations=OFF \
         -DBUILD_qtwebengine=OFF \
         -DBUILD_qtsensors=OFF \
-        -DBUILD_qtandroidextras=OFF \
         -DBUILD_qtvirtualkeyboard=OFF \
         -DBUILD_qttools=OFF \
         -DBUILD_qtspeech=OFF \
