@@ -36,6 +36,7 @@ function build_qtpi () {
         -DQT_FEATURE_pkg_config=ON \
         -DQT_FEATURE_pcre2=ON \
         -DQT_FEATURE_evdev=ON \
+        -DQT_FEATURE_tslib=ON \
         -DQT_FEATURE_system_freetype=ON \
         -DQT_FEATURE_fontconfig=ON \
         -DQT_FEATURE_glib=ON \
