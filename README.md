@@ -94,3 +94,25 @@ exit
 
 - The `built/` directory will contain the cross-compiled Qt 6.9.1 tar.gz archive.
 - Use the new qt-crosscompile-host:post-compile-6.9.1-full image to compile Qt projects
+
+# On the Raspberry Pi2
+
+### Copy the cross-compiled Qt tar.gz to the Raspberry Pi
+```bash
+scp qt6pi-6.9.1-bookworm.tar.gz pi@raspberrypi.local:/home/pi/
+```
+### Extract to /usr/local/qt6
+```bash
+mkdir /usr/local/qt6
+tar -xvf qt6pi-6.9.1-bookworm.tar.gz -C /usr/local/qt6 --strip-components=1
+```
+
+### Install required packages
+```bash
+apt install -y pigpio libgles-dev libegl-dev libxkbcommon-x11-0 libharfbuzz0b libts0 libmtdev-dev libinput10
+```
+
+### Add Qt to the LD_LIBRARY_PATH
+```bash
+echo export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/qt6/lib >> ~/.bashrc
+```
