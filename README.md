@@ -1,6 +1,6 @@
 # Cross-Compiling Qt 6.9.1 for Raspberry Pi Using Docker
 
-This guide explains how to cross-compile Qt 6.9.1 for Raspberry Pi using Docker. The process involves building a host environment, compiling Qt for the host, and then cross-compiling Qt for the Raspberry Pi. The resulting binaries can be used to develop and deploy Qt applications on the Raspberry Pi 4.
+This guide explains how to cross-compile Qt 6.9.1 for Raspberry Pi using Docker. The process involves building a host environment, compiling Qt for the host, and then cross-compiling Qt for the Raspberry Pi. The resulting binaries can be used to develop and deploy Qt applications on the Raspberry Pi.
 
 ## Prerequisites
 
@@ -72,30 +72,14 @@ docker build -f Dockerfile.clean -t qt-crosscompile:post-compile-6.9.1-full-clea
 ```
 
 # Pre built images can be found on Docker Hub
-## Clone the Brewberry Pi Qt project repository
-```bash
-git clone git@github.com:TyrantUT/BrewberryPi_Qt6.git
-git checkout qt_6.9.1-full
-git pull
-```
-
-## Run the pre-built image to cross compile for Raspberry Pi
-```bash
-
-docker run -it --rm --mount type=bind,source="$(pwd)/BrewberryPi_Qt6,target=/build/BrewberryPi_Qt6" tyrantut/qt-crosscompile:post-compile-6.9.1-full-clean /bin/bash
-qt-raspi/bin/qt-cmake BrewberryPi_Qt6
-cmake --build . --parallel
-cmake --install .
-cp BrewberryPiApp BrewberryPi_Qt6/
-exit
-```
+https://hub.docker.com/repository/docker/tyrantut/qt-crosscompile/general
 
 ## Output
 
 - The `built/` directory will contain the cross-compiled Qt 6.9.1 tar.gz archive.
 - Use the new qt-crosscompile-host:post-compile-6.9.1-full image to compile Qt projects
 
-# On the Raspberry Pi2
+# On the Raspberry Pi
 
 ### Copy the cross-compiled Qt tar.gz to the Raspberry Pi
 ```bash
