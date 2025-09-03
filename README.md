@@ -4,15 +4,19 @@ This guide explains how to cross-compile Qt 6.9.1 for Raspberry Pi using Docker.
 
 ## Prerequisites
 
-- **Docker**: Ensure Docker is installed and running on your system.
 - **Raspberry Pi**: Target device for cross-compiled Qt binaries. With Raspbian OS x64 installed.
 - **Host System**: A Linux-based system (Ubuntu recommended) for running Docker.
+
+## Clone Repository
+```bash
+git clone https://github.com/TyrantUT/Qt_Docker.git
+```
 
 ## Directory Setup
 
 Create directories to store the Raspberry Pi Qt Build:
 ```bash
-mkdir -p built
+cd Qt_Docker && mkdir -p built
 ```
 - `built/`: Stores the Raspberry Pi cross-compiled Qt 6.9.1 tar.gz archive.
 
